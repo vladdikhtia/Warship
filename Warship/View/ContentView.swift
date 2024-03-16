@@ -8,63 +8,70 @@
 import SwiftUI
 
 struct ContentView: View {
-    let url = URL(string: "https://www.mil.gov.ua/")
-    
+    @Environment(\.openURL) var openURL
     @StateObject var viewModel = WarshipViewModel()
-    
+    @State private var isAlert = false
     var body: some View {
         ZStack{
             LinearGradient(colors: [.blue.opacity(0.8), .yellow.opacity(0.8)], startPoint: .topTrailing, endPoint: .bottomLeading)
                 .ignoresSafeArea()
-            
-            VStack(alignment: .leading) {
-                HStack{
-                    VStack(spacing: 10) {
-                        Text("Генеральний штаб ЗС України інформує")
-                            .font(.footnote)
-                        Text("Загальні бойові втрати \nросійського окупанта")
-                            .font(.title2).bold()
-                            .fontDesign(.rounded)
-                    }
-                    .foregroundStyle(.primary)
-                    Spacer()
-                    VStack{
-                        Image("MOU")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                        Link("mil.gov.ua", destination: url!)
-                            .foregroundStyle(.blue)
-                    }
-                }
-                
-                
-                Text("Станом на: \(formattedDate(date:viewModel.enemy?.data.date ?? " "))")
-                    .fontWeight(.semibold)
-                    .padding(.vertical, 8)
-                
-                Text("\(viewModel.enemy?.data.day ?? 0)-й день війни")
-                    .fontWeight(.bold)
-                    .foregroundStyle(.blue)
-                    .underline(pattern: .solid)
+            ScrollView{
+                VStack(alignment: .leading) {
+                    HeaderView(date: "\(viewModel.enemy?.data.date ?? "")", day: viewModel.enemy?.data.day ?? 0)
                     
-//                List(viewModel.enemy?.data.stats) { s in
-//                    Text("\(enemy.data.stats)")
-//                }
-                Text("Stats: \(viewModel.enemy?.data.stats.tanks ?? 0)")
+                    EnemyView(name: "особового складу", amount: viewModel.enemy?.data.stats.personnelUnits ?? 0, increaseAmount: viewModel.enemy?.data.increase.personnelUnits ?? 0, image:"people")
+                    EnemyView(name: "танків", amount: viewModel.enemy?.data.stats.tanks ?? 0, increaseAmount: viewModel.enemy?.data.increase.tanks ?? 0, image: "tank")
+                    EnemyView(name: "ББМ", amount: viewModel.enemy?.data.stats.armouredFightingVehicles ?? 0, increaseAmount: viewModel.enemy?.data.increase.armouredFightingVehicles ?? 0, image: "bbm")
+                    EnemyView(name: "арт. систем", amount: viewModel.enemy?.data.stats.artillerySystems ?? 0, increaseAmount: viewModel.enemy?.data.increase.artillerySystems ?? 0, image: "art")
+                    EnemyView(name: "РСЗВ", amount: viewModel.enemy?.data.stats.mlrs ?? 0, increaseAmount: viewModel.enemy?.data.increase.mlrs ?? 0, image: "rszv")
+                    EnemyView(name: "засобів ППО", amount: viewModel.enemy?.data.stats.aaWarfareSystems ?? 0, increaseAmount: viewModel.enemy?.data.increase.aaWarfareSystems ?? 0, image: "ppo")
+                    EnemyView(name: "літаків", amount: viewModel.enemy?.data.stats.planes ?? 0, increaseAmount: viewModel.enemy?.data.increase.planes ?? 0, image: "plane")
+                    EnemyView(name: "гелікоптерів", amount: viewModel.enemy?.data.stats.helicopters ?? 0, increaseAmount: viewModel.enemy?.data.increase.helicopters ?? 0, image: "helicopter")
+                    EnemyView(name: "автотехніки та автоцистерн", amount: viewModel.enemy?.data.stats.vehiclesFuelTanks ?? 0, increaseAmount: viewModel.enemy?.data.increase.vehiclesFuelTanks ?? 0, image: "auto")
+                    EnemyView(name: "кораблів та катерів", amount: viewModel.enemy?.data.stats.warshipsCutters ?? 0, increaseAmount: viewModel.enemy?.data.increase.warshipsCutters ?? 0, image: "ship")
+                    EnemyView(name: "БПЛА", amount: viewModel.enemy?.data.stats.uavSystems ?? 0, increaseAmount: viewModel.enemy?.data.increase.uavSystems ?? 0, image: "bpla")
+                    EnemyView(name: "спец. техніки", amount: viewModel.enemy?.data.stats.specialMilitaryEquip ?? 0, increaseAmount: viewModel.enemy?.data.increase.specialMilitaryEquip ?? 0, image: "special")
+                    EnemyView(name: "підводних човнів", amount: viewModel.enemy?.data.stats.submarines ?? 0, increaseAmount: viewModel.enemy?.data.increase.submarines ?? 0, image: "submarine")
+                    EnemyView(name: "крилатих ракет", amount: viewModel.enemy?.data.stats.cruiseMissiles ?? 0, increaseAmount: viewModel.enemy?.data.increase.cruiseMissiles ?? 0, image: "rocket")
+                    
+                    Text("Бажаєш збільшити стату?")
+                        .font(.title2)
+                        .fontWeight(.heavy)
+                    
+                   
+                    Button {
+                        openURL(URL(string: "https://savelife.in.ua/en/donate-en/")!)
+                    } label: {
+                        Label("Повернись живим", systemImage: "heart.square")
+                            .padding()
+                            .foregroundColor(.primary)
+                            .font(.subheadline)
+                            .background(
+                                .thinMaterial
+                            )
+                            .clipShape(.capsule)
+                    }
+                    .padding(.bottom, 20)
+                           
+
+                }
                 
             }
             .padding()
+            .ignoresSafeArea(edges: .bottom)
+            .onChange(of: viewModel.errorMessage, showError)
+            .alert("Oops! System's Prankin'!", isPresented: $isAlert) {
+                Button("OK") { }
+            } message: {
+                Text("\(viewModel.errorMessage ?? " ")")
+            }
         }
     }
     
-    func formattedDate(date: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd" // Set your desired date format here
-        if let date = dateFormatter.date(from: date) {
-            dateFormatter.dateFormat = "dd MMMM yyyy" // Set your desired output format here
-            return dateFormatter.string(from: date)
-        } else {
-            return ""
+    
+    func showError() {
+        if viewModel.errorMessage != nil {
+            isAlert = true
         }
     }
 }

@@ -14,6 +14,10 @@
 		3163A4B32BA3ABB2006935F9 /* WarshipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3163A4B22BA3ABB2006935F9 /* WarshipViewModel.swift */; };
 		3163A4B52BA3AC37006935F9 /* WarshipDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3163A4B42BA3AC37006935F9 /* WarshipDataService.swift */; };
 		3163A4B72BA3AD2B006935F9 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3163A4B62BA3AD2B006935F9 /* Enemy.swift */; };
+		3163A4B92BA5DF5E006935F9 /* EnemyAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3163A4B82BA5DF5E006935F9 /* EnemyAPIError.swift */; };
+		3163A4BB2BA5E857006935F9 /* EnemyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3163A4BA2BA5E857006935F9 /* EnemyView.swift */; };
+		3163A4BD2BA5EB73006935F9 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3163A4BC2BA5EB73006935F9 /* HeaderView.swift */; };
+		3163A4BF2BA6023B006935F9 /* EnemyIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3163A4BE2BA6023B006935F9 /* EnemyIcon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +29,10 @@
 		3163A4B22BA3ABB2006935F9 /* WarshipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarshipViewModel.swift; sourceTree = "<group>"; };
 		3163A4B42BA3AC37006935F9 /* WarshipDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarshipDataService.swift; sourceTree = "<group>"; };
 		3163A4B62BA3AD2B006935F9 /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
+		3163A4B82BA5DF5E006935F9 /* EnemyAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyAPIError.swift; sourceTree = "<group>"; };
+		3163A4BA2BA5E857006935F9 /* EnemyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyView.swift; sourceTree = "<group>"; };
+		3163A4BC2BA5EB73006935F9 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		3163A4BE2BA6023B006935F9 /* EnemyIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyIcon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +88,8 @@
 			isa = PBXGroup;
 			children = (
 				3163A4A22BA3A1EB006935F9 /* ContentView.swift */,
+				3163A4BA2BA5E857006935F9 /* EnemyView.swift */,
+				3163A4BC2BA5EB73006935F9 /* HeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -96,6 +106,8 @@
 			isa = PBXGroup;
 			children = (
 				3163A4B62BA3AD2B006935F9 /* Enemy.swift */,
+				3163A4B82BA5DF5E006935F9 /* EnemyAPIError.swift */,
+				3163A4BE2BA6023B006935F9 /* EnemyIcon.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -178,11 +190,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3163A4B92BA5DF5E006935F9 /* EnemyAPIError.swift in Sources */,
+				3163A4BB2BA5E857006935F9 /* EnemyView.swift in Sources */,
 				3163A4B52BA3AC37006935F9 /* WarshipDataService.swift in Sources */,
 				3163A4B72BA3AD2B006935F9 /* Enemy.swift in Sources */,
 				3163A4A32BA3A1EB006935F9 /* ContentView.swift in Sources */,
+				3163A4BF2BA6023B006935F9 /* EnemyIcon.swift in Sources */,
 				3163A4B32BA3ABB2006935F9 /* WarshipViewModel.swift in Sources */,
 				3163A4A12BA3A1EB006935F9 /* WarshipApp.swift in Sources */,
+				3163A4BD2BA5EB73006935F9 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

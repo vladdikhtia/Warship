@@ -10,28 +10,41 @@ import Foundation
 class WarshipViewModel: ObservableObject {
     @Published var enemy: Enemy?
     @Published var errorMessage: String?
+//    @Published var enemyIcon: EnemyIcon.Data?
     
     private let service = WarshipDataService()
 
     
     init() {
-        fetchEnemies()
+        fetchEnemy()
+//        fetchEnemyIcon()
     }
     
-    
-    func fetchEnemies() {
-        service.fetchMessage { enemies, error in
-                        DispatchQueue.main.async {
-                            if let error = error {
-                                self.errorMessage = error.localizedDescription
-                                return
-                            }
-                            self.enemy = enemies ?? nil
-                        }
-                    }
+    func fetchEnemy() {
+        service.fetchEnemy { [weak self] result in
+            DispatchQueue.main.async{
+                switch result {
+                case .success(let enemy):
+                    self?.enemy = enemy
+                case .failure(let error):
+                    self?.errorMessage = ("\(error.customDescription)")
+                }
+            }
         }
+    }
     
-        
+//    func fetchEnemyIcon() {
+//        service.fetchEnemyIcon { [weak self] result in
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(let icon):
+//                    self?.enemyIcon = icon
+//                case .failure(let error):
+//                    self?.errorMessage = error.customDescription
+//                }
+//            }
+//        }
+//    }
 }
 
 
