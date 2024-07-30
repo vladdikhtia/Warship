@@ -15,8 +15,6 @@ struct EnemyView: View {
     
     var body: some View {
         HStack(alignment: .center, spacing: 40) {
-            //            Rectangle()
-            //                .frame(width: 100, height: 75)
             Image(image)
                 .resizable()
                 .scaledToFit()
@@ -27,7 +25,7 @@ struct EnemyView: View {
                     Text("\(amount)")
                         .font(.title)
                         .fontWeight(.heavy)
-                    Text("(+\(increaseAmount))")
+                    Text(increaseAmount == 0 ? "" :"(+\(increaseAmount))")
                         .font(.title3)
                         .fontWeight(.bold)
                 }

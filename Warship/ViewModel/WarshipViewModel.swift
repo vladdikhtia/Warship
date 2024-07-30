@@ -7,7 +7,8 @@
 
 import Foundation
 
-class WarshipViewModel: ObservableObject {
+@MainActor
+final class WarshipViewModel: ObservableObject {
     @Published var enemy: Enemy?
     @Published var errorMessage: String?
 //    @Published var enemyIcon: EnemyIcon.Data?
@@ -15,10 +16,10 @@ class WarshipViewModel: ObservableObject {
     private let service = WarshipDataService()
 
     
-    init() {
-        fetchEnemy()
-//        fetchEnemyIcon()
-    }
+//    init() {
+//        fetchEnemy()
+////        fetchEnemyIcon()
+//    }
     
     func fetchEnemy() {
         service.fetchEnemy { [weak self] result in
@@ -30,6 +31,19 @@ class WarshipViewModel: ObservableObject {
                     self?.errorMessage = ("\(error.customDescription)")
                 }
             }
+        }
+    }
+    
+    func fetchEnemyAsync() async throws {
+        do{
+            self.enemy = try await service.fetchEnemyAsync()
+        } catch let error as EnemyAPIError {
+            self.errorMessage = error.customDescription
+            print("DEBUG: Error occurred: \(error.customDescription)")
+        }
+        catch {
+            print("DEBUG: Unknown error occurred: \(error.localizedDescription)")
+            self.errorMessage = "Unknown error occurred: \(error.localizedDescription)"
         }
     }
     

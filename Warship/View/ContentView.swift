@@ -13,6 +13,8 @@ struct ContentView: View {
     @State private var isAlert = false
     var body: some View {
         ZStack{
+            Color.white
+                .ignoresSafeArea()
             LinearGradient(colors: [.blue.opacity(0.8), .yellow.opacity(0.8)], startPoint: .topTrailing, endPoint: .bottomLeading)
                 .ignoresSafeArea()
             ScrollView{
@@ -37,7 +39,6 @@ struct ContentView: View {
                     Text("Бажаєш збільшити стату?")
                         .font(.title2)
                         .fontWeight(.heavy)
-                    
                    
                     Button {
                         openURL(URL(string: "https://savelife.in.ua/en/donate-en/")!)
@@ -52,9 +53,8 @@ struct ContentView: View {
                             .clipShape(.capsule)
                     }
                     .padding(.bottom, 20)
-                           
-
                 }
+                .foregroundStyle(.black)
                 
             }
             .padding()
@@ -65,6 +65,12 @@ struct ContentView: View {
             } message: {
                 Text("\(viewModel.errorMessage ?? " ")")
             }
+        }
+        .onAppear {
+            Task{
+                try await viewModel.fetchEnemyAsync()
+            }
+            
         }
     }
     
