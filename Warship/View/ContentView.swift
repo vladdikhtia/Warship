@@ -64,12 +64,17 @@ struct ContentView: View {
                     .foregroundStyle(.black)
                     
                 }
+                .refreshable {
+                        await refreshData()
+                    
+                    print("refreshed")
+                }
                 .padding()
             }
         }
         .ignoresSafeArea(edges: .bottom)
         .onChange(of: viewModel.errorMessage, showError)
-        .alert("Oops! System's Prankin'!", isPresented: $isAlert) {
+        .alert("Oops!", isPresented: $isAlert) {
             Button("OK") { }
         } message: {
             Text("\(viewModel.errorMessage ?? " ")")
@@ -79,12 +84,15 @@ struct ContentView: View {
         }
     }
     
-    func loadData() {
+    private func loadData() {
         isLoading = true
         Task {
-            await viewModel.fetchEnemyAsync()
+            await refreshData()
             isLoading = false
         }
+    }
+    private func refreshData() async {
+             await viewModel.fetchEnemyAsync()
     }
     
     func showError() {

@@ -27,7 +27,7 @@ final class WarshipViewModel: ObservableObject {
         }
     }
     
-    func fetchEnemyAsync() async {
+    func fetchEnemyAsync() async  {
         do{
             self.enemy = try await service.fetchEnemyAsync()
         } catch let error as EnemyAPIError {
