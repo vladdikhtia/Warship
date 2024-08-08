@@ -32,7 +32,7 @@ enum EnemyAPIError: Error {
         case .invalidStatusCode(let statusCode):
             return "Invalid status code: \(statusCode)"
         case .unknownError(let error):
-            return "An unknown error occured:\n \(error.localizedDescription)"
+            return "\(error.localizedDescription)"
         }
     }
 }
