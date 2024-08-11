@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HeaderView: View {
-    let url = URL(string: "https://www.mil.gov.ua/")
+    private let url = URL(string: "https://www.mil.gov.ua/")
     let date: String
     let day: Int
     
