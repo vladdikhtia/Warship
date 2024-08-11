@@ -7,35 +7,82 @@
 
 import Foundation
 
-class WarshipDataService {
+protocol NetworkServiceProtocol {
+    func getEnemy() async throws -> Enemy
+}
+
+protocol URLSessionProtocol {
+    func data(for url: URL) async throws -> (Data, URLResponse)
+}
+
+extension URLSession: URLSessionProtocol {
+    func data(for url: URL) async throws -> (Data, URLResponse) {
+        try await self.data(from: url)
+    }
+}
+class MockDataService: NetworkServiceProtocol {
+    var enemyToReturn: Enemy?
+    var errorToThrow: Error?
     
-    private let urlString = "https://russianwarship.rip/api/v2/statistics/latest"
+    func getEnemy() async throws -> Enemy {
+        if let error = errorToThrow {
+            throw error
+        }
+        if let enemy = enemyToReturn {
+            return enemy
+        }
+        fatalError("MockNetworkService not configured properly")
+    }
+}
+
+
+// mock urlSession for testing
+class MockURLSession: URLSessionProtocol {
+    var data: Data?
+    var response: URLResponse?
+    var error: Error?
     
-    func fetchEnemy(completion: @escaping(Result<Enemy, EnemyAPIError>) -> Void) {
-        guard let url = URL(string: urlString) else { return }
+    func data(for url: URL) async throws -> (Data, URLResponse) {
+        if let error = error {
+            throw error
+        }
+        return (data ?? Data(), response ?? URLResponse())
+    }
+}
+
+
+class WarshipDataService: NetworkServiceProtocol {
+    private let urlString: String
+    private let urlSession: URLSessionProtocol
+    
+    init(
+        urlString: String = "https://russianwarship.rip/api/v2/statistics/latest",
+        urlSession: URLSessionProtocol = URLSession.shared
+    ) {
+        self.urlString = urlString
+        self.urlSession = urlSession
+    }
+    
+    func getEnemy() async throws -> Enemy {
         
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                completion(.failure(.unknownError(error: error)))
-                return
-            }
+        guard let url = URL(string: urlString) else {
+            throw EnemyAPIError.invalidURL
+        }
+        do {
+            let (data, response) = try await urlSession.data(for: url)
             
             guard let httpResponse = response as? HTTPURLResponse else {
-                print("Bad Http")
-                completion(.failure(.requestFailed(description: "Request failed")))
-                return
+                print("DEBUG: Bad Server Response")
+                throw EnemyAPIError.badServerResponse
             }
             
             guard httpResponse.statusCode == 200 else {
-                print("Failed to fetch with status code: \(httpResponse.statusCode)")
-                completion(.failure(.invalidStatusCode(statusCode: httpResponse.statusCode)))
-                return
+                print("DEBUG: Failed to fetch with status code: \(httpResponse.statusCode)")
+                throw EnemyAPIError.invalidStatusCode(statusCode: httpResponse.statusCode)
             }
             
-            guard let data = data else {
-                print("Invalid data")
-                completion(.failure(.invalidData))
-                return
+            guard !data.isEmpty else {
+                throw EnemyAPIError.invalidData
             }
             
             do {
