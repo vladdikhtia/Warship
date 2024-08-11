@@ -87,37 +87,17 @@ class WarshipDataService: NetworkServiceProtocol {
             
             do {
                 let enemy = try JSONDecoder().decode(Enemy.self, from: data)
-                completion(.success(enemy))
-            } catch {
-                print("DEBUG: Failed to decode with error \(error)")
-                completion(.failure(.jsonParsingFailure))
+                return enemy
+            } catch let decodingError as DecodingError {
+                print("DEBUG: Decoding error occurred: \(decodingError)")
+                throw EnemyAPIError.decodingError(decodingError)
             }
-        }.resume()
-    }
-    
-    func fetchEnemyAsync() async throws -> Enemy {
-        guard let url = URL(string: urlString) else {
-            throw EnemyAPIError.invalidURL
+        } catch let urlError as URLError {
+            print("DEBUG: Network error occurred: \(urlError)")
+            throw EnemyAPIError.networkError(urlError)
+        } catch {
+            print("error JSON Decoder: \(error)")
+            throw error
         }
-        
-        let (data, response) = try await URLSession.shared.data(from: url)
-        
-        guard let httpResponse = response as? HTTPURLResponse else {
-            print("DEBUG: Bad Server Response")
-            throw EnemyAPIError.badServerResponse
-        }
-        
-        guard httpResponse.statusCode == 200 else {
-            print("DEBUG: Failed to fetch with status code: \(httpResponse.statusCode)")
-            throw EnemyAPIError.invalidStatusCode(statusCode: httpResponse.statusCode)
-        }
-        
-        guard !data.isEmpty else {
-            print("DEBUG: Invalid data")
-            throw EnemyAPIError.invalidData
-        }
-        
-        let enemy = try JSONDecoder().decode(Enemy.self, from: data)
-        return enemy
     }
 }
