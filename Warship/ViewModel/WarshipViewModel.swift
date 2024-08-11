@@ -12,31 +12,24 @@ final class WarshipViewModel: ObservableObject {
     @Published var enemy: Enemy?
     @Published var errorMessage: String?
     
-    private let service = WarshipDataService()
-
-    func fetchEnemy() {
-        service.fetchEnemy { [weak self] result in
-            DispatchQueue.main.async{
-                switch result {
-                case .success(let enemy):
-                    self?.enemy = enemy
-                case .failure(let error):
-                    self?.errorMessage = ("\(error.customDescription)")
-                }
-            }
-        }
+    
+    // Dependency Injection
+    let networkService: NetworkServiceProtocol
+    
+    init(networkService: NetworkServiceProtocol = WarshipDataService()) {
+        self.networkService = networkService
     }
     
-    func fetchEnemyAsync() async  {
+    func fetchEnemyAsync() async {
         do{
-            self.enemy = try await service.fetchEnemyAsync()
+            self.enemy = try await networkService.getEnemy()
         } catch let error as EnemyAPIError {
             self.errorMessage = error.customDescription
-            print("DEBUG: Error occurred: \(error.customDescription)")
+            print("DEBUG: Error occurred: \(error)")
         }
         catch {
-            print("DEBUG: Unknown error occurred: \(error.localizedDescription)")
-            self.errorMessage = "\(error.localizedDescription)"
+            print("DEBUG: Unknown error occurred: \(error)")
+            self.errorMessage = error.localizedDescription
         }
     }
 }
