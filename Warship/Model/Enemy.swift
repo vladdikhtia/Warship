@@ -8,19 +8,30 @@
 
 import Foundation
 
-struct Enemy: Codable {
-    let message: String
-    let data: Data
+struct Enemy: Codable, Equatable {
+    let message: String?
+    let data: Info
+    
+    static func == (lhs: Enemy, rhs: Enemy) -> Bool {
+        return lhs.message == rhs.message && lhs.data == rhs.data
+    }
 }
 
-struct Data: Codable {
-    let date: String
-    let day: Int
-    let stats: Stats
-    let increase: Increase
+struct Info: Codable, Equatable {
+    let date: String?
+    let day: Int?
+    let stats: Stats?
+    let increase: Increase?
+    
+    static func == (lhs: Info, rhs: Info) -> Bool {
+        return lhs.date == rhs.date &&
+               lhs.day == rhs.day &&
+               lhs.stats == rhs.stats &&
+               lhs.increase == rhs.increase
+    }
 }
 
-struct Stats: Codable {
+struct Stats: Codable, Equatable {
     let tanks: Int
     let personnelUnits: Int
     let armouredFightingVehicles: Int
