@@ -49,7 +49,7 @@ struct Stats: Codable, Equatable {
     let submarines: Int
     
     enum CodingKeys: String, CodingKey {
-    case tanks, mlrs, planes, helicopters, submarines
+        case tanks, mlrs, planes, helicopters, submarines
         case personnelUnits = "personnel_units"
         case armouredFightingVehicles = "armoured_fighting_vehicles"
         case artillerySystems = "artillery_systems"
@@ -63,7 +63,7 @@ struct Stats: Codable, Equatable {
     }
 }
 
-struct Increase: Codable {
+struct Increase: Codable, Equatable {
     let personnelUnits: Int
     let tanks: Int
     let armouredFightingVehicles: Int
@@ -81,7 +81,7 @@ struct Increase: Codable {
     let submarines: Int
     
     enum CodingKeys: String, CodingKey {
-    case tanks, mlrs, planes, helicopters, submarines
+        case tanks, mlrs, planes, helicopters, submarines
         case personnelUnits = "personnel_units"
         case armouredFightingVehicles = "armoured_fighting_vehicles"
         case artillerySystems = "artillery_systems"
