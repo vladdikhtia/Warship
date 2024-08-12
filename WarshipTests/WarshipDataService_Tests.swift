@@ -33,57 +33,88 @@ final class WarshipDataService_Tests: XCTestCase {
     
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+        warshipDataService = nil
+        mockURLSession = nil
     }
     
-    func test_WarshipDataService_FetchEnemyAsync_SuccessfullyReturnsEnemy() async throws {
-        //Given
-        let dataService = WarshipDataService()
-        
-        //When
-        var testEnemy: Enemy? = nil
-        
-        let returnedValue = try await dataService.getEnemy()
-        testEnemy = returnedValue
-        
-        //Then
-        XCTAssertNotNil(testEnemy)
-    }
-    
-    
-    func test_WarshipDataService_FetchEnemyAsync_Success() async throws {
+    func test_WarshipDataService_GetEnemy_SuccessfullyReturnsEnemy() async throws {
         // Given
-        let mockUrlSession = MockURLSession()
-        let dataService = WarshipDataService(urlSession: mockUrlSession)
-        
         let expectedEnemy = Enemy(message: nil, data: Info(date: "2024-08-09", day: 898, stats: nil, increase: nil))
         
-        mockUrlSession.data = try JSONEncoder().encode(expectedEnemy)
-        mockUrlSession.response = HTTPURLResponse(url: URL(string: "https://example.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)
+        mockURLSession.data = try JSONEncoder().encode(expectedEnemy)
+        mockURLSession.response = HTTPURLResponse(
+            url: URL(
+                string: "https://russianwarship.rip/api/v2/statistics/latest"
+            )!,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: nil
+        )
         
         // When
-        let returnedValue =  try await dataService.getEnemy()
+        let returnedEnemy =  try await warshipDataService.getEnemy()
         
         // Then
-        XCTAssertEqual(returnedValue.data.date, expectedEnemy.data.date)
-        XCTAssertEqual(returnedValue.data.day, expectedEnemy.data.day)
+        XCTAssertNotNil(returnedEnemy)
+        XCTAssertEqual(returnedEnemy.data.date, expectedEnemy.data.date)
+        XCTAssertEqual(returnedEnemy.data.day, expectedEnemy.data.day)
+        XCTAssertEqual(returnedEnemy, expectedEnemy)
     }
     
+  
+    func test_WarshipDataService_GetEnemy_BadServerResponseError() async {
+        // Given
+        let dataService = WarshipDataService(urlString: "https://www.google.com", urlSession: MockURLSession())
+        // When
+        do {
+            _ = try await dataService.getEnemy()
+            XCTFail("Expected to throw EnemyAPIError.badServerResponse, but succeeded instead")
+        } catch let error as EnemyAPIError {
+            XCTAssertEqual(error, .badServerResponse, "Expected EnemyAPIError.invalidURL but got \(error) instead")
+        }
+        catch {
+            XCTFail("Unexpected error: \(error)")
+        }
+    }
     
-    // good test, but function is fucked up
-//    func test_WarshipDataService_FetchEnemyAsync_InvalidURL() async {
-//        // Given
-//        let dataService = WarshipDataService(urlString: "https://www.google.com")
-//        // When
-//        do {
-//            _ = try await dataService.fetchEnemyAsync()
-//            XCTFail("Expected to throw EnemyAPIError.invalidURL, but succeeded instead")
-//        } catch let error as EnemyAPIError {
-//            XCTAssertEqual(error, .invalidURL, "Expected EnemyAPIError.invalidURL but got \(error) instead")
-//        } 
-//        catch {
-//            XCTFail("Expected to throw EnemyAPIError.invalidURL, but threw a different error: \(error)")
-//        }
+    func test_WarshipDataService_GetEnemy_InvalidStatusCode() async {
+        // Given
+        mockURLSession.response = HTTPURLResponse(
+            url: URL(string: "https://russianwarship.rip/api/v2/statistics/latest")!,
+            statusCode: 404,
+            httpVersion: nil,
+            headerFields: nil
+        )
+        //When
+        do {
+            _ = try await warshipDataService.getEnemy()
+            XCTFail("Expected to throw EnemyAPIError.invalidStatusCode, but succeeded instead")
+        } catch let error as EnemyAPIError {
+            XCTAssertEqual(error, .invalidStatusCode(statusCode: 404))
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
         
-        // Then
-//    }
+    }
+    
+    func test_WarshipDataService_GetEnemy_InvalidDataError() async {
+        //Given
+        mockURLSession.data = Data() // empty Data
+        mockURLSession.response = HTTPURLResponse(
+            url: URL(string: "https://russianwarship.rip/api/v2/statistics/latest")!,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: nil
+        )
+        
+        //When
+        do {
+            _ = try await warshipDataService.getEnemy()
+            XCTFail("Expected to throw EnemyAPIError.invalidData, but succeeded instead")
+        } catch let error as EnemyAPIError {
+            XCTAssertEqual(error, .invalidData)
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
+    }
 }
