@@ -21,11 +21,14 @@ import XCTest
  */
 
 
-
 final class WarshipDataService_Tests: XCTestCase {
-    
+    var warshipDataService: WarshipDataService!
+    var mockURLSession: MockURLSession!
+
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        mockURLSession = MockURLSession()
+        warshipDataService = WarshipDataService(urlSession: mockURLSession)
     }
     
     override func tearDownWithError() throws {
