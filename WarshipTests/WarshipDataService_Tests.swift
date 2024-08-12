@@ -24,7 +24,7 @@ import XCTest
 final class WarshipDataService_Tests: XCTestCase {
     var warshipDataService: WarshipDataService!
     var mockURLSession: MockURLSession!
-
+    
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         mockURLSession = MockURLSession()
@@ -61,7 +61,7 @@ final class WarshipDataService_Tests: XCTestCase {
         XCTAssertEqual(returnedEnemy, expectedEnemy)
     }
     
-  
+    
     func test_WarshipDataService_GetEnemy_BadServerResponseError() async {
         // Given
         let dataService = WarshipDataService(urlString: "https://www.google.com", urlSession: MockURLSession())
@@ -117,4 +117,52 @@ final class WarshipDataService_Tests: XCTestCase {
             XCTFail("Unexpected error: \(error)")
         }
     }
+    
+    func test_WarshipDataService_GetEnemy_DecodingError() async {
+        // Given
+        let invalidJSON = "{ \"invalid\": \"json\" }".data(using: .utf8)!
+        mockURLSession.data = invalidJSON
+        mockURLSession.response = HTTPURLResponse(
+            url: URL(string: "https://russianwarship.rip/api/v2/statistics/latest")!,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: nil
+        )
+        
+        // When
+        do {
+            _ = try await warshipDataService.getEnemy()
+            XCTFail("Expected decodingError, but succeeded")
+        } catch let error as EnemyAPIError {
+            // Then
+            if case .decodingError(let decodingError) = error {
+                XCTAssertTrue(true)
+            } else {
+                XCTFail("Unexpected error: \(error)")
+            }
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
+    }
+    
+    func test_WarshipDataService_GetEnemy_NetworkError() async {
+        // Given
+        mockURLSession.error = URLError(.notConnectedToInternet)
+        // When
+        do {
+            _ = try await warshipDataService.getEnemy()
+            XCTFail("Expected networkError, but succeeded")
+        } catch let error as EnemyAPIError {
+            // Then
+            if case .networkError(let uRLError) = error {
+                XCTAssertTrue(true)
+            } else {
+                XCTFail("Unexpected error: \(error)")
+            }
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
+    }
+    
+    
 }
