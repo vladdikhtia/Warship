@@ -12,7 +12,6 @@ final class WarshipViewModel: ObservableObject {
     @Published var enemy: Enemy?
     @Published var errorMessage: String?
     
-    
     // Dependency Injection
     let networkService: NetworkServiceProtocol
     

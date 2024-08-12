@@ -40,11 +40,12 @@ struct HeaderView: View {
                 .foregroundStyle(.blue)
                 .underline(pattern: .solid)
     }
+    
     func formattedDate(date: String) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd" // Set your desired date format here
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         if let date = dateFormatter.date(from: date) {
-            dateFormatter.dateFormat = "dd MMMM yyyy" // Set your desired output format here
+            dateFormatter.dateFormat = "dd MMMM yyyy"
             return dateFormatter.string(from: date)
         } else {
             return ""

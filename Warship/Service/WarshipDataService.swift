@@ -64,10 +64,10 @@ class WarshipDataService: NetworkServiceProtocol {
     }
     
     func getEnemy() async throws -> Enemy {
-        
         guard let url = URL(string: urlString) else {
             throw EnemyAPIError.invalidURL
         }
+        
         do {
             let (data, response) = try await urlSession.data(for: url)
             
