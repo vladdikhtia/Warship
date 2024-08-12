@@ -30,48 +30,60 @@ final class WarshipViewModel_Tests: XCTestCase {
         mockDataService = MockDataService()
         viewModel = WarshipViewModel(networkService: mockDataService)
     }
-
+    
     override func tearDownWithError() throws {
         viewModel = nil
         mockDataService = nil
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testFetchEnemyAsync_Success() async {
-            // Given
+    func test_WarshipViewModel_FetchEnemyAsync_Success() async {
+        // Given
         let expectedEnemy = Enemy(message: nil, data: Info(date: "2024-08-11", day: 900, stats: nil, increase: nil))
-            mockDataService.enemyToReturn = expectedEnemy
-            
-            // When
-            await viewModel.fetchEnemyAsync()
-            
-            // Then
-            XCTAssertEqual(viewModel.enemy, expectedEnemy)
-            XCTAssertNil(viewModel.errorMessage)
+        mockDataService.enemyToReturn = expectedEnemy
+        
+        // When
+        await viewModel.fetchEnemyAsync()
+        
+        // Then
+        XCTAssertNotNil(viewModel.enemy)
+        XCTAssertEqual(viewModel.enemy, expectedEnemy)
+        XCTAssertNil(viewModel.errorMessage)
     }
     
-    func testFetchEnemyAsync_EnemyAPIError() async {
-            // Given
-            mockDataService.errorToThrow = EnemyAPIError.badServerResponse
-            
-            // When
-            await viewModel.fetchEnemyAsync()
-            
-            // Then
-            XCTAssertNil(viewModel.enemy)
-            XCTAssertEqual(viewModel.errorMessage, EnemyAPIError.badServerResponse.customDescription)
+    func test_WarshipViewModel_FetchEnemyAsync_InvalidURLError() async {
+        // Given
+        mockDataService.errorToThrow = EnemyAPIError.invalidURL
+        // When
+        await viewModel.fetchEnemyAsync()
+        // Then
+        XCTAssertNil(viewModel.enemy)
+        XCTAssertEqual(viewModel.errorMessage, EnemyAPIError.invalidURL.customDescription)
+    }
+    
+    func test_WarshipViewModel_FetchEnemyAsync_BadServerResponseError() async {
+        // Given
+        mockDataService.errorToThrow = EnemyAPIError.badServerResponse
+        // When
+        await viewModel.fetchEnemyAsync()
+        // Then
+        XCTAssertNil(viewModel.enemy)
+        XCTAssertEqual(viewModel.errorMessage, EnemyAPIError.badServerResponse.customDescription)
     }
     
     func testFetchEnemyAsync_UnknownError() async {
-            // Given
-            let error = URLError(.cannotFindHost)
-            mockDataService.errorToThrow = EnemyAPIError.unknownError(error: error)
-            
-            // When
-            await viewModel.fetchEnemyAsync()
-            
-            // Then
-            XCTAssertNil(viewModel.enemy)
-            XCTAssertEqual(viewModel.errorMessage, EnemyAPIError.unknownError(error: error).customDescription)
-        }
+        // Given
+        struct UnknownError: Error {}
+        mockDataService.errorToThrow = UnknownError()
+        
+        // When
+        await viewModel.fetchEnemyAsync()
+        
+        // Then
+        XCTAssertNil(viewModel.enemy)
+        XCTAssertNotNil(viewModel.errorMessage)
+        
+        let expectedErrorMessage = "The operation couldn’t be completed."
+        XCTAssertTrue(viewModel.errorMessage?.contains(expectedErrorMessage) ?? false, "Unexpected error message: \(viewModel.errorMessage ?? "nil")")
+    }
 }
