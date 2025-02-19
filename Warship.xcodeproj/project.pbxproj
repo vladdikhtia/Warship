@@ -18,7 +18,20 @@
 		3163A4BB2BA5E857006935F9 /* EnemyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3163A4BA2BA5E857006935F9 /* EnemyView.swift */; };
 		3163A4BD2BA5EB73006935F9 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3163A4BC2BA5EB73006935F9 /* HeaderView.swift */; };
 		3163A4BF2BA6023B006935F9 /* EnemyIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3163A4BE2BA6023B006935F9 /* EnemyIcon.swift */; };
+		316CB3172C650CE1006D39E3 /* WarshipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316CB3162C650CE1006D39E3 /* WarshipTests.swift */; };
+		316CB31E2C650E72006D39E3 /* WarshipViewModel_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316CB31D2C650E72006D39E3 /* WarshipViewModel_Tests.swift */; };
+		316CB3222C6513DB006D39E3 /* WarshipDataService_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316CB3212C6513DB006D39E3 /* WarshipDataService_Tests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		316CB3182C650CE1006D39E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3163A4952BA3A1EB006935F9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3163A49C2BA3A1EB006935F9;
+			remoteInfo = Warship;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3163A49D2BA3A1EB006935F9 /* Warship.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Warship.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -33,10 +46,21 @@
 		3163A4BA2BA5E857006935F9 /* EnemyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyView.swift; sourceTree = "<group>"; };
 		3163A4BC2BA5EB73006935F9 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		3163A4BE2BA6023B006935F9 /* EnemyIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyIcon.swift; sourceTree = "<group>"; };
+		316CB3142C650CE1006D39E3 /* WarshipTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WarshipTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		316CB3162C650CE1006D39E3 /* WarshipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarshipTests.swift; sourceTree = "<group>"; };
+		316CB31D2C650E72006D39E3 /* WarshipViewModel_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarshipViewModel_Tests.swift; sourceTree = "<group>"; };
+		316CB3212C6513DB006D39E3 /* WarshipDataService_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarshipDataService_Tests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		3163A49A2BA3A1EB006935F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		316CB3112C650CE1006D39E3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -50,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				3163A49F2BA3A1EB006935F9 /* Warship */,
+				316CB3152C650CE1006D39E3 /* WarshipTests */,
 				3163A49E2BA3A1EB006935F9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				3163A49D2BA3A1EB006935F9 /* Warship.app */,
+				316CB3142C650CE1006D39E3 /* WarshipTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -120,6 +146,16 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		316CB3152C650CE1006D39E3 /* WarshipTests */ = {
+			isa = PBXGroup;
+			children = (
+				316CB3162C650CE1006D39E3 /* WarshipTests.swift */,
+				316CB31D2C650E72006D39E3 /* WarshipViewModel_Tests.swift */,
+				316CB3212C6513DB006D39E3 /* WarshipDataService_Tests.swift */,
+			);
+			path = WarshipTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -140,6 +176,24 @@
 			productReference = 3163A49D2BA3A1EB006935F9 /* Warship.app */;
 			productType = "com.apple.product-type.application";
 		};
+		316CB3132C650CE1006D39E3 /* WarshipTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 316CB31C2C650CE1006D39E3 /* Build configuration list for PBXNativeTarget "WarshipTests" */;
+			buildPhases = (
+				316CB3102C650CE1006D39E3 /* Sources */,
+				316CB3112C650CE1006D39E3 /* Frameworks */,
+				316CB3122C650CE1006D39E3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				316CB3192C650CE1006D39E3 /* PBXTargetDependency */,
+			);
+			name = WarshipTests;
+			productName = WarshipTests;
+			productReference = 316CB3142C650CE1006D39E3 /* WarshipTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -152,6 +206,10 @@
 				TargetAttributes = {
 					3163A49C2BA3A1EB006935F9 = {
 						CreatedOnToolsVersion = 15.2;
+					};
+					316CB3132C650CE1006D39E3 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = 3163A49C2BA3A1EB006935F9;
 					};
 				};
 			};
@@ -169,6 +227,7 @@
 			projectRoot = "";
 			targets = (
 				3163A49C2BA3A1EB006935F9 /* Warship */,
+				316CB3132C650CE1006D39E3 /* WarshipTests */,
 			);
 		};
 /* End PBXProject section */
@@ -180,6 +239,13 @@
 			files = (
 				3163A4A82BA3A1EC006935F9 /* Preview Assets.xcassets in Resources */,
 				3163A4A52BA3A1EC006935F9 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		316CB3122C650CE1006D39E3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +268,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		316CB3102C650CE1006D39E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				316CB31E2C650E72006D39E3 /* WarshipViewModel_Tests.swift in Sources */,
+				316CB3172C650CE1006D39E3 /* WarshipTests.swift in Sources */,
+				316CB3222C6513DB006D39E3 /* WarshipDataService_Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		316CB3192C650CE1006D39E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3163A49C2BA3A1EB006935F9 /* Warship */;
+			targetProxy = 316CB3182C650CE1006D39E3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		3163A4A92BA3A1EC006935F9 /* Debug */ = {
@@ -335,11 +419,14 @@
 				DEVELOPMENT_TEAM = H9TD9ZY99U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Warship;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.news";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -347,9 +434,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dikhtia.Warship;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -364,11 +455,14 @@
 				DEVELOPMENT_TEAM = H9TD9ZY99U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Warship;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.news";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -376,9 +470,59 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dikhtia.Warship;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		316CB31A2C650CE1006D39E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H9TD9ZY99U;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dikhtia.WarshipTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Warship.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Warship";
+			};
+			name = Debug;
+		};
+		316CB31B2C650CE1006D39E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H9TD9ZY99U;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dikhtia.WarshipTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Warship.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Warship";
 			};
 			name = Release;
 		};
@@ -399,6 +543,15 @@
 			buildConfigurations = (
 				3163A4AC2BA3A1EC006935F9 /* Debug */,
 				3163A4AD2BA3A1EC006935F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		316CB31C2C650CE1006D39E3 /* Build configuration list for PBXNativeTarget "WarshipTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				316CB31A2C650CE1006D39E3 /* Debug */,
+				316CB31B2C650CE1006D39E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
